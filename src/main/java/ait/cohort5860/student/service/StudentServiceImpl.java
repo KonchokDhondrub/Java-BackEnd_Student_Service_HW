@@ -40,8 +40,9 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto removeStudent(Long id) {
         Student student = studentRepository.findById(id).orElseThrow(NotFoundException::new);
         studentRepository.deleteById(student);
-        return null;
+        return new StudentDto(student.getId(), student.getName(), student.getScores());
     }
+
 
     @Override
     public StudentDto updateStudent(Long id, StudentUpdateDto studentUpdateDto) {
