@@ -5,33 +5,35 @@ import ait.cohort5860.student.dto.StudentCredentialsDto;
 import ait.cohort5860.student.dto.StudentDto;
 import ait.cohort5860.student.dto.StudentUpdateDto;
 import ait.cohort5860.student.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
-@RestController /// !important
+@RestController
+/// !important
+@RequiredArgsConstructor
+//  это аннотация Lombok, которая автоматически генерирует конструктор с параметрами для всех final полей и полей с аннотацией @NonNull.
 public class StudentController {
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
     @PostMapping("/student")
     public Boolean addStudent(@RequestBody StudentCredentialsDto studentCredentialsDto) {
         return studentService.addStudent(studentCredentialsDto);
     }
 
-   @GetMapping("/student/{id}")
+    @GetMapping("/student/{id}")
     public StudentDto findStudent(@PathVariable Long id) {
         return studentService.findStudent(id);
     }
 
-   @DeleteMapping("/student/{id}")
+    @DeleteMapping("/student/{id}")
     public StudentDto removeStudent(@PathVariable Long id) {
         return studentService.removeStudent(id);
     }
 
-   @PatchMapping("/student/{id}")
+    @PatchMapping("/student/{id}")
     public StudentDto updateStudent(@PathVariable Long id, @RequestBody StudentUpdateDto studentUpdateDto) {
         return studentService.updateStudent(id, studentUpdateDto);
     }
@@ -53,7 +55,7 @@ public class StudentController {
     }
 
     @GetMapping("/students/exam/{examName}/minscore/{minScore}")
-    public List<StudentDto> findStudentsByExamMinScore(@PathVariable String examName,@PathVariable Integer minScore) {
-        return studentService.findStudentsByExamMinScore(examName, minScore);
+    public List<StudentDto> findByExamAndScoreGreaterThan(@PathVariable String examName, @PathVariable Integer minScore) {
+        return studentService.findByExamAndScoreGreaterThan(examName, minScore);
     }
 }

@@ -23,5 +23,5 @@ public interface StudentService {
 
     Long countStudentsByName(Set<String> name);
 
-    List<StudentDto> findStudentsByExamMinScore(String examName, Integer minScore);
+    List<StudentDto> findByExamAndScoreGreaterThan(String examName, Integer minScore);
 }
