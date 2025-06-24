@@ -15,7 +15,7 @@ public interface StudentService {
 
     StudentDto removeStudent(Long id);
 
-    StudentDto updateStudent(Long id, StudentUpdateDto studentUpdateDto);
+    StudentCredentialsDto updateStudent(Long id, StudentUpdateDto studentUpdateDto);
 
     Boolean addScore(Long id, ScoreDto studentDto);
 

@@ -34,7 +34,7 @@ public class StudentController {
     }
 
     @PatchMapping("/student/{id}")
-    public StudentDto updateStudent(@PathVariable Long id, @RequestBody StudentUpdateDto studentUpdateDto) {
+    public StudentCredentialsDto updateStudent(@PathVariable Long id, @RequestBody StudentUpdateDto studentUpdateDto) {
         return studentService.updateStudent(id, studentUpdateDto);
     }
 

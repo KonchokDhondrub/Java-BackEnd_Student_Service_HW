@@ -19,7 +19,7 @@ public class Student {
     private String name;
     @Setter
     private String password;
-    private Map<String, Integer> scores;
+    private Map<String, Integer> scores = new HashMap<>();
 
     public Student(long id, String name, String password) {
         this.id = id;
@@ -28,7 +28,7 @@ public class Student {
     }
 
     public boolean addScore(String examName, Integer score) {
-        if (scores == null) scores = new HashMap<>();
+//        if (scores == null) scores = new HashMap<>();
         return scores.put(examName, score) == null;
     }
 }

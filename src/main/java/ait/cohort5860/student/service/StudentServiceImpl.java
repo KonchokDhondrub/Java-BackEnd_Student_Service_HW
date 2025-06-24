@@ -22,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Boolean addStudent(StudentCredentialsDto studentCredentialsDto) {
-        if (studentRepository.findById(studentCredentialsDto.getId()).isPresent()) {
+        if (studentRepository.existsById(studentCredentialsDto.getId())) {
             return false;
         }
         Student student = modelMapper.map(studentCredentialsDto, Student.class);
@@ -43,9 +43,8 @@ public class StudentServiceImpl implements StudentService {
         return modelMapper.map(student, StudentDto.class);
     }
 
-
     @Override
-    public StudentDto updateStudent(Long id, StudentUpdateDto studentUpdateDto) {
+    public StudentCredentialsDto updateStudent(Long id, StudentUpdateDto studentUpdateDto) {
         Student student = studentRepository.findById(id).orElseThrow(NotFoundException::new);
         if (studentUpdateDto.getName() != null) {
             student.setName(studentUpdateDto.getName());
@@ -54,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
             student.setPassword(studentUpdateDto.getPassword());
         }
         studentRepository.save(student);
-        return modelMapper.map(student, StudentDto.class);
+        return modelMapper.map(student, StudentCredentialsDto.class);
     }
 
     @Override
@@ -64,7 +63,6 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.save(student);
         return result;
     }
-
 
     @Override
     public List<StudentDto> findStudentsByName(String name) {
@@ -78,10 +76,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Long countStudentsByName(Set<String> names) {
-        return studentRepository.countByNameIn(names);
+    public Long countStudentsByName(Set<String> name) {
+        return studentRepository.countByNameInIgnoreCase(name);
     }
-
 
     @Override
     public List<StudentDto> findByExamAndScoreGreaterThan(String examName, Integer minScore) {
