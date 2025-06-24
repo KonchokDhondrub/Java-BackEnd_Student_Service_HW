@@ -66,6 +66,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<StudentDto> findStudentsByName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return List.of();
+        }
         return studentRepository.findByNameIgnoreCase(name)
                 .map(student -> new StudentDto(
                         student.getId(),
@@ -77,6 +80,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Long countStudentsByName(Set<String> name) {
+        if (name == null || name.isEmpty()) {
+            return 0L;
+        }
         return studentRepository.countByNameInIgnoreCase(name);
     }
 
